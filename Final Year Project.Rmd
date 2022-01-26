@@ -1,0 +1,107 @@
+---
+title: "fianl year project"
+author: "Luke Finn & Sean tynan"
+output:
+  html_document:
+    df_print: paged
+---
+Anemia is a condition in which you lack enough healthy red blood cells to carry adequate oxygen to your body's tissues. Having anemia, also referred to as low hemoglobin, can make you feel tired and weak. There are many forms of anemia, each with its own cause.
+The anemia itself can worsen cardiac function, both because it causes cardiac stress through tachycardia and increased stroke volume, and because it can cause a reduced renal blood flow and fluid retention, adding further stress to the heart.
+
+When the total CPK level is very high, it most often means there has been injury or stress to muscle tissue, the heart, or the brain. Muscle tissue injury is most likely. When a muscle is damaged, CPK leaks into the bloodstream. Finding which specific form of CPK is high helps determine which tissue has been damaged.
+CPK=Creatine phosphokinase
+
+People with diabetes are also more likely to have heart failure. Heart failure is a serious condition, but it doesn't mean the heart has stopped beating; it means your heart can't pump blood well. This can lead to swelling in your legs and fluid building up in your lungs, making it hard to breathe.
+
+Ejection fraction is a measurement of the percentage of blood leaving your heart each time it squeezes (contracts). It is just one of many tests your doctor may use to determine how your heart works. The heart contracts and relaxes.
+
+High blood pressure forces the heart to work harder to pump blood to the rest of the body. This causes the lower left heart chamber (left ventricle) to thicken. A thickened left ventricle increases the risk of heart attack, heart failure and sudden cardiac death.
+
+Platelet abnormalities have been well described in heart failure but the significance of platelets in contributing to the thromboembolic complications of heart failure remains uncertain.
+
+Elevated serum creatinine has been associated with increased mortality in hypertensive persons, the elderly, and patients with myocardial infarction or stroke in whom cardiovascular disease is the major cause of death.
+
+Sodium helps keep a normal balance of fluid in your body. Patients with heart failure need to follow a low-sodium diet because it helps control symptoms of heart failure and prevent other heart problems.
+
+Men have a higher incidence of heart failure, but the overall prevalence rate is similar in both sexes, since women survive longer after the onset of heart failure. Women tend to be older when diagnosed with heart failure and more often have diastolic dysfunction than men.
+
+Over time, the strain and damage to your heart muscle can result in heart failure. Continuing to smoke will worsen the damage. When you have heart failure, your heart is unable to pump the right amount of blood throughout your body.
+```{r}
+Heart_Mortality <- read.csv(file=file.choose())
+```
+```{r}
+Age=Heart_Mortality$age
+Anma=Heart_Mortality$anaemia
+Creatphos=Heart_Mortality$creatinine_phosphokinase
+Diab=Heart_Mortality$diabetes
+Ejectfrac=Heart_Mortality$ejection_fraction
+HBP=Heart_Mortality$high_blood_pressure
+Plate=Heart_Mortality$platelets
+Secreat=Heart_Mortality$serum_creatinine
+Sersodm=Heart_Mortality$serum_sodium
+Sex=Heart_Mortality$sex
+Smoking=Heart_Mortality$smoking
+Time_1=Heart_Mortality$time
+DeathEvent=Heart_Mortality$DEATH_EVENT
+
+```
+```{r}
+Model1 <- lm(DeathEvent ~ Age+Anma+Creatphos+Diab+Ejectfrac+HBP+Plate+Secreat+Sersodm+Sex+Smoking+Time_1, data =)
+summary(Model1)
+```
+```{r}
+anova(Model1)
+```
+```{r}
+plot(Model1)
+```
+```{r}
+Model2 <- lm(DeathEvent ~ Age + HBP, data = )
+plot(Model2)
+summary(Model2)
+```
+```{r}
+head(Heart_Mortality)
+```
+
+```{r}
+library(dplyr)
+Heart_Mortality <- Heart_Mortality %>%
+  mutate(DeathEvent = DeathEvent + 1,
+         Anma=Anma+1,
+         Sex=Sex+1,
+         Diab=Diab+1,
+         HBP=HBP+1,
+         Smoking=Smoking+1)
+```
+```{r}
+Model3 <- lm(DeathEvent ~ Age + HBP, data = )
+plot(Model3)
+anova(Model3)
+anova(Model2)
+```
+```{r}
+summary(Model3)$coef
+```
+
+```{r}
+confint(Model3, level = 0.99)
+```
+```{r}
+Model4 <- lm(DeathEvent ~ Age + Sex + Smoking + Diab + HBP, data = )
+summary(Model4)
+anova(Model4)
+```
+```{r}
+Model5 <- lm(DeathEvent ~ Age+Creatphos+Ejectfrac+Secreat+Sersodm+Sex+Time_1, data =)
+summary(Model5)
+```
+```{r}
+Model6 <- lm(DeathEvent ~ Anma+Creatphos+Ejectfrac+Plate+Secreat+Sersodm+Time_1, data =)
+summary(Model6)
+```
+```{r}
+Model7 <- lm(DeathEvent <- Age+)
+```
+
+gg
